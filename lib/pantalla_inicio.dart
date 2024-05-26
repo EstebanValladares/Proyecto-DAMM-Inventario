@@ -85,7 +85,7 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
 
   @override
   Widget build(BuildContext context) {
-    final String usuario = ModalRoute.of(context)!.settings.arguments as String;
+    // final String usuario = ModalRoute.of(context)!.settings.arguments as String;
 
     return Scaffold(
       appBar: AppBar(
@@ -104,10 +104,10 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
                   child: Text('Cerrar sesión'),
                 ),
               ],
-              child: Row(
-                children: <Widget>[
-                  Text(usuario),
-                  const Icon(Icons.arrow_drop_down),
+              child: const Row(
+                  children: <Widget>[
+              //     // Text(usuario),
+                  Icon(Icons.arrow_drop_down),
                 ],
               ),
             ),
