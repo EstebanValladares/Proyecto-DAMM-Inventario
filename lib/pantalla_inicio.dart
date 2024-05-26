@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'pantalla_cotizacion.dart';
 
 class PantallaInicio extends StatefulWidget {
-  const PantallaInicio({Key? key}) : super(key: key);
+  const PantallaInicio({super.key});
 
   @override
   _PantallaInicioEstado createState() => _PantallaInicioEstado();
@@ -10,14 +10,20 @@ class PantallaInicio extends StatefulWidget {
 
 class _PantallaInicioEstado extends State<PantallaInicio> {
   String categoriaSeleccionada = 'Todos';
-  final List<String> categorias = const ['Todos', 'Proteínas', 'Vitaminas', 'Accesorios'];
+  final List<String> categorias = const [
+    'Todos',
+    'Proteínas',
+    'Vitaminas',
+    'Accesorios'
+  ];
   final List<Map<String, String>> productos = const [
     {
       'nombre': 'Proteína Whey',
       'precio': '949.90',
       'imagen': 'assets/proteina.png',
       'categoria': 'Proteínas',
-      'descripcion': 'Proteína de suero de alta calidad para el crecimiento muscular.',
+      'descripcion':
+          'Proteína de suero de alta calidad para el crecimiento muscular.',
     },
     {
       'nombre': 'Vitamina C Masticable',
@@ -31,7 +37,8 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
       'precio': '799.90',
       'imagen': 'assets/bascula.jpg',
       'categoria': 'Accesorios',
-      'descripcion': 'Alta presión garantizada   • Baterías: 3 x 15v AAA  • Capacidad: 2 g – 5000 g',
+      'descripcion':
+          'Alta presión garantizada   • Baterías: 3 x 15v AAA  • Capacidad: 2 g – 5000 g',
     },
     {
       'nombre': 'Creatina Elemental',
@@ -52,7 +59,8 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
     );
   }
 
-  void navegarADetallesProducto(BuildContext context, Map<String, String> producto) async {
+  void navegarADetallesProducto(
+      BuildContext context, Map<String, String> producto) async {
     final resultado = await Navigator.pushNamed(
       context,
       '/detalles_producto',
@@ -74,7 +82,8 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PantallaCotizacion(productosCotizados: productosCotizados),
+        builder: (context) =>
+            PantallaCotizacion(productosCotizados: productosCotizados),
       ),
     );
   }
@@ -86,42 +95,69 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
   @override
   Widget build(BuildContext context) {
     // final String usuario = ModalRoute.of(context)!.settings.arguments as String;
+    List<ListTile> tiles = [
+      ListTile(
+        title: const Text("Inicio"),
+        leading: const Icon(Icons.home),
+        onTap: () {
+          Navigator.pop(context);
+        }
+      ),
+      ListTile(
+        title: const Text("Cotizaciones"),
+        leading: const Icon(Icons.shopping_cart),
+        onTap: () {
+          navegarACotizacion(context);
+        }
+      ),
+      ListTile(
+        title: const Text("Cerrar sesión"),
+        leading: const Icon(Icons.logout),
+        onTap: () {
+          cerrarSesion();
+        }
+      ),
+    ];
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: const Color(0xff283673),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            PopupMenuButton<String>(
-              onSelected: (String result) {
-                if (result == 'logout') {
-                  cerrarSesion();
-                }
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                  value: 'logout',
-                  child: Text('Cerrar sesión'),
-                ),
-              ],
-              child: const Row(
-                  children: <Widget>[
-              //     // Text(usuario),
-                  Icon(Icons.arrow_drop_down),
-                ],
-              ),
-            ),
             const Expanded(
               child: Center(
-                child: Text('NutriStock'),
+                child: Text('NutriStock', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.shopping_cart),
+              icon: const Icon(Icons.shopping_cart, color: Colors.white),
               onPressed: () => navegarACotizacion(context),
             ),
           ],
         ),
+      ),
+      drawer: Theme(
+        data: Theme.of(context).copyWith(
+          iconTheme: const IconThemeData(color: Colors.white),
+        ),
+        child: Drawer(
+          child: ListView(
+            children: [
+              const UserAccountsDrawerHeader(
+                accountName: Text("USER"), 
+                accountEmail: Text("EMAIL"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: AssetImage("assets/logo_nutristock.png"),
+                ),
+                decoration: BoxDecoration(color: Color(0xff283673)),
+              ),
+              ...tiles
+            ]
+          ),
+        ),
+        
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -130,7 +166,8 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
           children: <Widget>[
             Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   border: Border.all(color: Colors.blueAccent),
@@ -144,7 +181,8 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
                       });
                       navegarAPantallaCategoria(context);
                     },
-                    items: categorias.map<DropdownMenuItem<String>>((String categoria) {
+                    items: categorias
+                        .map<DropdownMenuItem<String>>((String categoria) {
                       return DropdownMenuItem<String>(
                         value: categoria,
                         child: Text(categoria),
@@ -155,7 +193,8 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
                       color: Colors.black87,
                     ),
                     dropdownColor: Colors.white,
-                    icon: const Icon(Icons.arrow_drop_down, color: Colors.blueAccent),
+                    icon: const Icon(Icons.arrow_drop_down,
+                        color: Colors.blueAccent),
                     isExpanded: true,
                   ),
                 ),
@@ -164,7 +203,10 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
             const SizedBox(height: 20),
             const Text(
               'Productos',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent),
             ),
             const SizedBox(height: 20),
             Expanded(
@@ -178,7 +220,8 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
                 itemCount: productos.length,
                 itemBuilder: (context, indice) {
                   return InkWell(
-                    onTap: () => navegarADetallesProducto(context, productos[indice]),
+                    onTap: () =>
+                        navegarADetallesProducto(context, productos[indice]),
                     child: TarjetaProducto(
                       producto: productos[indice],
                       agregarProductoACotizacion: agregarProductoACotizacion,
@@ -199,10 +242,10 @@ class TarjetaProducto extends StatelessWidget {
   final Function(Map<String, String>) agregarProductoACotizacion;
 
   const TarjetaProducto({
-    Key? key,
+    super.key,
     required this.producto,
     required this.agregarProductoACotizacion,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
