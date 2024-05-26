@@ -149,7 +149,7 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
                 accountName: Text("USER"), 
                 accountEmail: Text("EMAIL"),
                 currentAccountPicture: CircleAvatar(
-                  backgroundImage: AssetImage("assets/logo_nutristock.png"),
+                  backgroundImage: AssetImage("assets/logo.jpeg"),
                 ),
                 decoration: BoxDecoration(color: Color(0xff283673)),
               ),
