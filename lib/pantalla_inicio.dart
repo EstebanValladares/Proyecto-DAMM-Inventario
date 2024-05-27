@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'pantalla_cotizacion.dart';
 
 class PantallaInicio extends StatefulWidget {
-  final String nombre;  //variables que recibe del login
+  final String nombre; //variables que recibe del login
   final String email;
 
-  const PantallaInicio({
-    super.key, 
-    required this.nombre,
-    required this.email});
-
+  const PantallaInicio({super.key, required this.nombre, required this.email});
 
   @override
   _PantallaInicioEstado createState() => _PantallaInicioEstado();
@@ -104,26 +100,45 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
     // final String usuario = ModalRoute.of(context)!.settings.arguments as String;
     List<ListTile> tiles = [
       ListTile(
-        title: const Text("Inicio"),
-        leading: const Icon(Icons.home),
-        onTap: () {
-          Navigator.pop(context);
-        }
-      ),
+          title: const Text("Inicio"),
+          leading: const Icon(Icons.home),
+          onTap: () {
+            Navigator.pop(context);
+          }),
       ListTile(
-        title: const Text("Cotizaciones"),
-        leading: const Icon(Icons.shopping_cart),
-        onTap: () {
-          navegarACotizacion(context);
-        }
-      ),
+          title: const Text("Cotizaciones"),
+          leading: const Icon(Icons.shopping_cart),
+          onTap: () {
+            navegarACotizacion(context);
+          }),
       ListTile(
-        title: const Text("Cerrar sesión"),
-        leading: const Icon(Icons.logout),
-        onTap: () {
-          cerrarSesion();
-        }
-      ),
+          title: const Text("Cerrar sesión", style: TextStyle(color: Colors.red)),
+          leading: const Icon(Icons.logout, color: Colors.red),
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Cerrar sesión'),
+                    content: const Text(
+                        '¿Estas seguro de que quieres cerrar sesión?'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Cancelar'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('Si'),
+                        onPressed: () {
+                          cerrarSesion();
+                        },
+                      )
+                    ],
+                  );
+                });
+          }),
     ];
 
     return Scaffold(
@@ -135,7 +150,9 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
           children: <Widget>[
             const Expanded(
               child: Center(
-                child: Text('NutriStock', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                child: Text('NutriStock',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ),
             IconButton(
@@ -150,21 +167,18 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
           iconTheme: const IconThemeData(color: Colors.white),
         ),
         child: Drawer(
-          child: ListView(
-            children: [
-              UserAccountsDrawerHeader(
-                accountName: Text(widget.nombre), 
-                accountEmail: Text(widget.email),
-                currentAccountPicture: const CircleAvatar(
-                  backgroundImage: AssetImage("assets/logo.jpeg"),
-                ),
-                decoration: const BoxDecoration(color: Color(0xff283673)),
+          child: ListView(children: [
+            UserAccountsDrawerHeader(
+              accountName: Text(widget.nombre),
+              accountEmail: Text(widget.email),
+              currentAccountPicture: const CircleAvatar(
+                backgroundImage: AssetImage("assets/logo.jpeg"),
               ),
-              ...tiles
-            ]
-          ),
+              decoration: const BoxDecoration(color: Color(0xff283673)),
+            ),
+            ...tiles
+          ]),
         ),
-        
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
