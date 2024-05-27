@@ -27,7 +27,7 @@ class _LoginViewState extends State<Login> {
       final response = await http.post(
         //variable de tipo http.Response que realiza una peticion POST
         Uri.parse(
-            'http://localhost:3000/login'), //direccion del servidor para ejecucion en el telfono tiene que apuntar a la dirrecion ip del servidor por ejemplo http://192.168.1.79:3000:login
+            'http://localhost:3000/login'), //direccion del servidor para ejecucion, en el telfono tiene que apuntar a la dirrecion ip del servidor por ejemplo http://192.168.1.79:3000:login
         body: jsonEncode(<String, String>{
           'email': email, //parametros que se envian al servidor
           'password': password,
