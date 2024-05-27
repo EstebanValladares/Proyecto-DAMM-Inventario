@@ -16,18 +16,18 @@ class MyApp extends StatelessWidget {
       title: 'NutriStock',
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      onGenerateRoute: (settings) {
+      onGenerateRoute: (settings) { //genera la ruta
         switch (settings.name) {
           case '/inicio':
             final args = settings.arguments as Map<String, String>;
             return MaterialPageRoute(
-              builder: (_) => PantallaInicio(
-                nombre: args['nombre']!,
-                email: args['email']!,
+              builder: (_) => PantallaInicio( //retorna la pantalla de inicio
+                nombre: args['nombre']!, //nombre del usuario
+                email: args['email']!, //correo del usuario
               ),
             );
           default:
-            throw Exception('Ruta no definida');
+            throw Exception('Ruta no definida'); 
         }
       },
       routes: {

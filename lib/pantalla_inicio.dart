@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'pantalla_cotizacion.dart';
 
 class PantallaInicio extends StatefulWidget {
-  final String nombre;
+  final String nombre;  //variables que recibe del login
   final String email;
 
   const PantallaInicio({
     super.key, 
-    required this.nombre, 
+    required this.nombre,
     required this.email});
-  // const PantallaInicio({super.key});
+
 
   @override
   _PantallaInicioEstado createState() => _PantallaInicioEstado();
