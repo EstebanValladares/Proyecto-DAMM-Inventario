@@ -1,7 +1,7 @@
-const express = require("express");
-const MongoClient = require("mongodb").MongoClient;
-const cors = require("cors");
-const bodyParser = require("body-parser");
+const express = require("express"); // Express es un framework de Node.js que permite crear aplicaciones web y APIs de forma sencilla
+const MongoClient = require("mongodb").MongoClient; // MongoClient es una clase que permite conectarse a una base de datos de MongoDB y realizar operaciones sobre ella
+const cors = require("cors"); // CORS es un middleware(intermediario entre diferentes sistemas) que permite habilitar las solicitudes HTTP entre diferentes dominios
+const bodyParser = require("body-parser"); //bodyParser es un middleware que permite parsear(analizar una cadena de caracteres) el cuerpo de las peticiones HTTP
 
 const app = express(); // Crear un servidor express
 app.use(cors()); // Habilitar CORS para todas las rutas
