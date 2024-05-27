@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'pantalla_cotizacion.dart';
 
 class PantallaInicio extends StatefulWidget {
-  const PantallaInicio({super.key});
+  final String nombre;
+  final String email;
+
+  const PantallaInicio({
+    super.key, 
+    required this.nombre, 
+    required this.email});
+  // const PantallaInicio({super.key});
 
   @override
   _PantallaInicioEstado createState() => _PantallaInicioEstado();
@@ -145,13 +152,13 @@ class _PantallaInicioEstado extends State<PantallaInicio> {
         child: Drawer(
           child: ListView(
             children: [
-              const UserAccountsDrawerHeader(
-                accountName: Text("USER"), 
-                accountEmail: Text("EMAIL"),
-                currentAccountPicture: CircleAvatar(
+              UserAccountsDrawerHeader(
+                accountName: Text(widget.nombre), 
+                accountEmail: Text(widget.email),
+                currentAccountPicture: const CircleAvatar(
                   backgroundImage: AssetImage("assets/logo.jpeg"),
                 ),
-                decoration: BoxDecoration(color: Color(0xff283673)),
+                decoration: const BoxDecoration(color: Color(0xff283673)),
               ),
               ...tiles
             ]

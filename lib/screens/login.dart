@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:login/pantalla_inicio.dart';
 import 'dart:convert';
 import 'registro.dart';
-import '../pantalla_inicio.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,24 +17,33 @@ class _LoginViewState extends State<Login> {
   final passController = TextEditingController();
   bool passToggle = true;
 
-  Future<bool> authenticateUser(String email, String password) async {
-    final response = await http.post(
-      Uri.parse('http://localhost:3000/login'),
-      // Uri.parse('http://192.168.1.79:3000/login'),
-      body: jsonEncode(<String, String>{
-        'email': email,
-        'password': password,
-      }),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
+  Future<String?> authenticateUser(String email, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:3000/login'),
+        body: jsonEncode(<String, String>{
+          'email': email,
+          'password': password,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
 
-    if (response.statusCode == 200) {
-      return true;
-    } else {
-      return false;
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = jsonDecode(response.body);
+        if (data['authenticated'] == true) {
+          return data['nombre'];
+        }
+      }
+    } catch (e) {
+      print('Error: $e');
     }
+
+    return null;
   }
 
   @override
@@ -113,15 +122,20 @@ class _LoginViewState extends State<Login> {
                 GestureDetector(
                   onTap: () async {
                     if (_formfield.currentState?.validate() ?? false) {
-                      bool isAuthenticated = await authenticateUser(
+                      String? nombre = await authenticateUser(
                         emailController.text,
                         passController.text,
                       );
-                      if (isAuthenticated) {
+
+                      if (nombre != null) {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const PantallaInicio()),
+                            builder: (context) => PantallaInicio(
+                              nombre: nombre,
+                              email: emailController.text,
+                            ),
+                          ),
                         );
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(

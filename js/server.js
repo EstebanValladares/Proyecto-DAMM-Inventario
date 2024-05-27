@@ -33,12 +33,12 @@ app.post("/login", async (req, res) => {
   try {
     await client.connect();
     const collection = client.db("users").collection("workers");
-    const user = await collection.findOne({ email });
+    const user = await collection.findOne({ email, password });
 
-    if (user && user.password === password) {
-      res.sendStatus(200);
+    if (user) {
+      res.status(200).send({ authenticated: true, nombre: user.nombre });
     } else {
-      res.sendStatus(401);
+      res.status(401).send({ authenticated: false });
     }
   } catch (err) {
     console.error(err);
